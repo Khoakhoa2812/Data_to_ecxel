@@ -1,0 +1,4 @@
+loguru
+pydantic_settings
+fastapi[standard]
+pymupdf

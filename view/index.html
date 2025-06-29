@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload PDF</title>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <h2>Upload a PDF File</h2>
+    <form action="/pdf_parser/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="pdf_file" accept="application/pdf" required>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>

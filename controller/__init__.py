@@ -1,3 +1,3 @@
-from controller.PDFprocessController import parse_pdf
+from controller.PDFparserController import parse_pdf
 
 __all__ = ['parse_pdf']

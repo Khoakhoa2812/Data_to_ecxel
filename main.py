@@ -6,12 +6,15 @@ from core.config import get_settings
 from core.logger import logger
 from routers import all_routes
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.sessions import SessionMiddleware
 
 settings = get_settings()
 
 logger = logger.bind(trace_id="N/A")
 
 app = FastAPI(title="DATA_TO_EXCEL", version="0.1.0")
+
+app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 
 app.mount("/css", StaticFiles(directory="view/css"), name="css")
 

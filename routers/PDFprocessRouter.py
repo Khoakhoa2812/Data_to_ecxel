@@ -1,6 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, File, UploadFile
+from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, Request
 from core.logger import logger
 from controller import parse_pdf
+from fastapi.templating import Jinja2Templates
+
+templates = Jinja2Templates(directory="view")
 
 router = APIRouter(
     prefix="/pdf_parser",
@@ -8,7 +11,7 @@ router = APIRouter(
 )
 
 @router.post("/upload")
-async def upload_pdf(pdf_file: UploadFile = File(...)):
+async def upload_pdf(request: Request, pdf_file: UploadFile = File(...)):
     try:
         logger.info(f"Received file: {pdf_file.filename}")
 
@@ -21,10 +24,7 @@ async def upload_pdf(pdf_file: UploadFile = File(...)):
         #
         # logger.info(f"File uploaded to Supabase: {supabase_url}")
 
-        return {
-            "message": "PDF parsed and uploaded successfully",
-            "text": parsed_text
-        }
+        return templates.TemplateResponse("excel_export.html", {"request": request})
     except Exception as e:
         logger.error(f"PDF processing failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))

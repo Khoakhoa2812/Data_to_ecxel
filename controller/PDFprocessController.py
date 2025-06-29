@@ -4,9 +4,12 @@ import tempfile
 import uuid
 from core import logger
 from utils import clean_pdf_text
+from fastapi.templating import Jinja2Templates
+
+templates = Jinja2Templates(directory="view")
 
 
-def parse_pdf(file: UploadFile) -> str:
+def parse_pdf(file: UploadFile):
     try:
         logger.info(f"Received file: {file.filename}")
 
@@ -21,7 +24,7 @@ def parse_pdf(file: UploadFile) -> str:
         doc.close()
 
         logger.info(f"Extracted text length: {len(full_text)} characters")
-        return clean_pdf_text(full_text.strip())
+        return templates.TemplateResponse("excel_export.html")
 
     except Exception as e:
         logger.exception(f"PDF processing failed: {e}")

@@ -24,7 +24,7 @@ def parse_pdf(file: UploadFile):
         doc.close()
 
         logger.info(f"Extracted text length: {len(full_text)} characters")
-        return templates.TemplateResponse("excel_export.html")
+        return templates.TemplateResponse("excel_export.html", {"request": file})
 
     except Exception as e:
         logger.exception(f"PDF processing failed: {e}")
